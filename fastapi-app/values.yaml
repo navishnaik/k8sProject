@@ -1,0 +1,43 @@
+fastapi:
+  image: fastapi-k8s
+  tag: latest2
+  replicas: 1
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "500m"
+      memory: "256Mi"
+
+postgres:
+  image: postgres:15
+  db: fastapi_db
+  user: postgres
+  password: postgres
+  pvcSize: 1Gi
+
+service:
+  fastapi:
+    port: 80
+  postgres:
+    port: 5432
+
+ingress:
+  enabled: true
+  host: micro.local
+  paths:
+    - path: /
+      service: fastapi
+      port: 80
+
+# Monitoring stack values
+kube-prometheus-stack:
+  grafana:
+    enabled: true
+    service:
+      type: NodePort
+      nodePort: 30000
+  prometheus:
+    prometheusSpec:
+      serviceMonitorSelectorNilUsesHelmValues: false

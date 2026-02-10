@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fastapi
+spec:
+  replicas: {{ .Values.fastapi.replicas }}
+  selector:
+    matchLabels:
+      app: fastapi
+  template:
+    metadata:
+      labels:
+        app: fastapi
+    spec:
+      containers:
+      - name: fastapi-k8s
+        image: {{ .Values.fastapi.image }}:{{ .Values.fastapi.tag }}
+        imagePullPolicy: IfNotPresent
+
+        ports:
+        - containerPort: {{ .Values.service.fastapi.port }}
+
+        env:
+        - name: POSTGRES_HOST
+          value: postgres
+
+        # Health checks
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: {{ .Values.service.fastapi.port }}
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: {{ .Values.service.fastapi.port }}
+          initialDelaySeconds: 5
+          periodSeconds: 5
+
+        # Resource management
+        resources:
+          requests:
+            cpu: {{ .Values.fastapi.resources.requests.cpu }}
+            memory: {{ .Values.fastapi.resources.requests.memory }}
+          limits:
+            cpu: {{ .Values.fastapi.resources.limits.cpu }}
+            memory: {{ .Values.fastapi.resources.limits.memory }}
