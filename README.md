@@ -1,8 +1,8 @@
-FASTAPI KUBERNETES MICROSERVICE PROJECT – FULL SETUP GUIDE
+# FASTAPI KUBERNETES MICROSERVICE PROJECT – FULL SETUP GUIDE
 
-========================================================
-PROJECT OVERVIEW
-========================================================
+---
+### PROJECT OVERVIEW
+
 
 This project is a FastAPI-based microservice deployed on Kubernetes (Minikube).
 It includes:
@@ -14,9 +14,9 @@ It includes:
 
 The goal is that an end user can run ONE script and the full system starts working.
 
-========================================================
-FOLDER STRUCTURE
-========================================================
+---
+### FOLDER STRUCTURE
+
 
 main-app/
 │
@@ -44,9 +44,9 @@ main-app/
 ├── start.sh
 └── README.txt
 
-========================================================
-PREREQUISITES
-========================================================
+---
+### PREREQUISITES
+
 
 - Docker installed and running
 - Minikube installed
@@ -57,9 +57,9 @@ PREREQUISITES
 
 127.0.0.1 micro.local
 
-========================================================
-BACKEND DOCKERFILE (backend/Dockerfile)
-========================================================
+---
+### BACKEND DOCKERFILE (backend/Dockerfile)
+
 
 FROM python:3.10-slim
 WORKDIR /app
@@ -69,9 +69,9 @@ COPY . .
 EXPOSE 80
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "80"]
 
-========================================================
-MONITORING STACK (PROMETHEUS + GRAFANA)
-========================================================
+---
+### MONITORING STACK (PROMETHEUS + GRAFANA)
+
 
 Prometheus and Grafana are installed using the official Helm chart:
 kube-prometheus-stack
@@ -89,9 +89,9 @@ Prometheus:
 - Enabled
 - Uses ServiceMonitor to scrape FastAPI metrics
 
-========================================================
-WHY NOTHING TO COMMIT FOR PROMETHEUS/GRAFANA
-========================================================
+---
+### WHY NOTHING TO COMMIT FOR PROMETHEUS/GRAFANA
+
 
 Prometheus and Grafana were installed using Helm CLI commands.
 Since no custom Helm charts were written:
@@ -99,9 +99,9 @@ Since no custom Helm charts were written:
 - The setup is reproducible using scripts
 - This is the recommended industry approach
 
-====================================================
-HOW TO RUN THE PROJECT
-========================================================
+---
+### HOW TO RUN THE PROJECT
+
 
 WINDOWS:
 1. Open Command Prompt as Administrator
@@ -114,9 +114,9 @@ LINUX / MAC:
 3. chmod +x start.sh
 4. Run: ./start.sh
 
-========================================================
-APPLICATION ACCESS
-========================================================
+---
+### APPLICATION ACCESS
+
 
 FastAPI UI:
 http://micro.local/
@@ -130,20 +130,20 @@ http://localhost:30000
 Default user: admin
 Default password: admin
 
-========================================================
-APP UI
-========================================================
+---
+### APP UI
+
 
 ![alt text](image.png)
 
-========================================================
-Grapahana Dashboard
-========================================================
+---
+### Grapahana Dashboard
+
 ![alt text](<grafana dashboard.PNG>)
 
-========================================================
-CLEANUP
-========================================================
+---
+### CLEANUP
+
 
 helm uninstall fastapi-app -n fastapi-app
 helm uninstall monitoring -n monitoring
@@ -151,6 +151,5 @@ minikube stop
 
 
 
-========================================================
+---
 END OF DOCUMENT
-========================================================
