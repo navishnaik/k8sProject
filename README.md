@@ -18,12 +18,12 @@ The goal is that an end user can run ONE script and the full system starts worki
 ### FOLDER STRUCTURE
 
 
+```text
 main-app/
-│
 ├── backend/
 │   ├── main.py
 │   ├── requirements.txt
-│   ├── dockerfile
+│   ├── Dockerfile
 │   ├── static/
 │   │   ├── app.js
 │   │   └── styles.css
@@ -43,6 +43,7 @@ main-app/
 ├── start.bat
 ├── start.sh
 └── README.txt
+```
 
 ---
 ### PREREQUISITES
